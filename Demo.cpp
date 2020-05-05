@@ -1,3 +1,4 @@
+
 //
 //  Demo.cpp
 //  operatorOverload
@@ -13,7 +14,7 @@
 using namespace std;
 using solver::solve, solver::RealVariable, solver::ComplexVariable;
 
-int main() {
+/*int main() {
     RealVariable x;
 
     cout << solve(2*x-4 == 10) << endl;  // 7
@@ -32,4 +33,5 @@ int main() {
     cout << solve(y+5i == 2*y+3i) << endl;   // 0+2i
 
     return 0;
-}
+}*/
+
