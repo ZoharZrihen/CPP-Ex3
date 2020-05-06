@@ -51,6 +51,9 @@ private:
 public:
 	ComplexVariable(): c1(std::complex<double>(0,0)),c2(std::complex<double>(1,0)),c3(std::complex<double>(0,0)){};
 	ComplexVariable(std::complex<double> x,std::complex<double>y,std::complex<double> z): c1(x),c2(y),c3(z){};
+	std::complex<double> getc1() const {return c1;}
+	std::complex<double> getc2() const {return c2;}
+	std::complex<double> getc3() const {return c3;}
 
 	ComplexVariable &operator*(const ComplexVariable &x);
 	ComplexVariable &operator*(double t);
@@ -70,7 +73,6 @@ public:
 	friend ComplexVariable &operator-(double t, const ComplexVariable &x);
 	friend ComplexVariable &operator-(std::complex<double>y,const ComplexVariable &x);
 
-	ComplexVariable &operator/(const ComplexVariable &x);
 	ComplexVariable &operator/(double t);
 	ComplexVariable &operator/(std::complex<double> x);
 	friend ComplexVariable &operator/(double t, const ComplexVariable &x);

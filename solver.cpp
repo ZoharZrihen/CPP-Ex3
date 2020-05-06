@@ -129,122 +129,185 @@ double solver::solve(RealVariable &x){
 }
 ////////////////////Complex////////////////////////////////////
 ComplexVariable &ComplexVariable::operator*(const ComplexVariable &x){
-	
+	std::complex<double> zero= std::complex<double>(0,0);
+	if(c1*x.c1!= zero||(c1*x.c2+c2*x.c1)!=zero){
+		throw runtime_error ("Power cant be higher than 2");
+	}
+	std::complex<double> a=c1*x.c3+c2*x.c2+c3*x.c1;
+	std::complex<double> b=c2*x.c3+c3*x.c2;
+	std::complex<double> c=c3*x.c3;
+	ComplexVariable *ans= new ComplexVariable(a,b,c);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator*(double t){
-	return *this;
+	std::complex<double> complexT=std::complex<double>(t,0);
+	ComplexVariable temp(c1,c2,c3);
+	ComplexVariable *ans=&(temp*complexT);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator*(std::complex<double>x){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1*x,c2*x,c3*x);
+	return *ans;
 }
 
 ComplexVariable &solver::operator*(double t, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	std::complex<double> complexT=std::complex<double>(t,0);
+	ComplexVariable temp(x.c1,x.c2,x.c3);
+	ComplexVariable *ans=&(temp*complexT);
 	return *ans;
 }
 
 ComplexVariable &solver::operator*(std::complex<double> y, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	ComplexVariable *ans=new ComplexVariable(x.c1*y,x.c2*y,x.c3*y);
 	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator+(const ComplexVariable &x){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1+x.c1,c2+x.c2,c3+x.c3);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator+(double t){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1,c2,c3+t);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator+(std::complex<double>x){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1,c2,c3+x);
+	return *ans;
 }
 
 ComplexVariable &solver::operator+(double t, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	ComplexVariable *ans=new ComplexVariable(x.c1,x.c2,x.c3+t);
 	return *ans;
 }
 
 ComplexVariable &solver::operator+(std::complex<double> y, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	ComplexVariable *ans=new ComplexVariable(x.c1,x.c2,x.c3+y);
 	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator-(const ComplexVariable &x){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1-x.c1,c2-x.c2,c3-x.c3);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator-(double t){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1,c2,c3-t);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator-(std::complex<double>x){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1,c2,c3-x);
+	return *ans;
 }
 
 ComplexVariable &solver::operator-(double t, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	ComplexVariable *ans=new ComplexVariable(-x.c1,-x.c2,t-x.c3);
 	return *ans;
 }
 
 ComplexVariable &solver::operator-(std::complex<double> y, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	ComplexVariable *ans=new ComplexVariable(-x.c1,-x.c2,y-x.c3);
 	return *ans;
 }
 
-ComplexVariable &ComplexVariable::operator/(const ComplexVariable &x){
-	return *this;
-}
-
 ComplexVariable &ComplexVariable::operator/(double t){
-	return *this;
+	if(t==0){
+		throw runtime_error("cant divide by zero");
+	}
+	ComplexVariable *ans=new ComplexVariable(c1/t,c2/t,c3/t);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator/(std::complex<double>x){
-	return *this;
+	std::complex<double> zero = std::complex<double>(0, 0);
+	if(x==zero){
+		throw runtime_error("cant divide by zero");
+	}
+	ComplexVariable *ans=new ComplexVariable(c1/x,c2/x,c3/x);
+	return *ans;
 }
 
 ComplexVariable &solver::operator/(double t, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	std::complex<double> zero = std::complex<double>(0,0);
+	if(x.c1==zero ||x.c2==zero || x.c3 == zero){
+		throw runtime_error("cant divide by zero");
+	}
+	ComplexVariable *ans=new ComplexVariable(t/x.c1,t/x.c2,t/x.c3);
 	return *ans;
 }
 
 ComplexVariable &solver::operator/(std::complex<double> y, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	std::complex<double> zero = std::complex<double>(0,0);
+	if(x.c1==zero ||x.c2==zero || x.c3 == zero){
+		throw runtime_error("cant divide by zero");
+	}
+	ComplexVariable *ans=new ComplexVariable(y/x.c1,y/x.c2,y/x.c3);
 	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator==(const ComplexVariable &x){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1-x.c1,c2-x.c2,c3-x.c3);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator==(double t){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1,c2,c3-t);
+	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator==(std::complex<double>x){
-	return *this;
+	ComplexVariable *ans=new ComplexVariable(c1,c2,c3-x);
+	return *ans;
 }
 
 ComplexVariable &solver::operator==(double t, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	ComplexVariable *ans=new ComplexVariable(x.c1,x.c2,x.c3-t);
 	return *ans;
 }
 
 ComplexVariable &solver::operator==(std::complex<double> y, const ComplexVariable &x){
-	ComplexVariable *ans=new ComplexVariable();
+	ComplexVariable *ans=new ComplexVariable(x.c1,x.c2,x.c3-y);
 	return *ans;
 }
 
 ComplexVariable &ComplexVariable::operator^(int t){
-	return *this;
+	ComplexVariable *ans;
+	std::complex<double> zero = std::complex<double>(0,0);
+	if(t<0 || t>2 || (c1!=zero && t>1)){
+		throw runtime_error("power cant be higher than 2 or negative");
+	}
+	if(t==0){
+		ans=new ComplexVariable(0,0,1);
+		return *ans;
+	} else if(t==1){
+		ans=new ComplexVariable(c1,c2,c3);
+		return *ans;
+	}
+	else{
+		ComplexVariable y(c1,c2,c3);
+		ComplexVariable z(c1,c2,c3);
+		ans=&(y*z);
+		return *ans;
+	}
 }
 
 
 std::complex<double> solver::solve(ComplexVariable &y){
-	std::complex<double> ans;
-	return ans;
+	std::complex<double> zero = std::complex<double>(0,0);
+	if(y.getc1()==zero && y.getc2()==zero && y.getc3()==zero){
+		throw runtime_error ("there are infinite solutions");
+	}
+	if(y.getc1()==zero){
+		if(y.getc2()==zero){
+			throw runtime_error ("no solutions for this");
+		}
+		return (-y.getc3()/y.getc2());
+	}
+	std::complex<double> d=pow(y.getc2(),2)-4.0*y.getc1()*y.getc3();
+	return ((-y.getc2())+sqrt(d))/(2.0*y.getc1());
 }
 
